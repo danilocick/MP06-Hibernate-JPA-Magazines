@@ -23,7 +23,7 @@ public class AutorJPAManager {
         AutorJPAManager MA = new AutorJPAManager();
         FileAccessor fa;
         fa = new FileAccessor();
-        fa.readAutorsFile("autors.txt");
+        fa.readAutorsFile("src/main/java/Docs/autors.txt");
         System.out.println("Autors llegits des del fitxer");
         for (int i = 0; i < fa.llistaAutors.size(); i++) {
             System.out.println(fa.llistaAutors.get(i).toString());
