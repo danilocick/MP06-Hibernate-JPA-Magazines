@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import Entities.Autor;
+import Entities.Revista;
 
 public class AutorJPAManager {
 
@@ -42,7 +43,30 @@ public class AutorJPAManager {
     public void addAutor(Autor autor) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        em.persist(autor);
+        Autor autor2 = em.find(Autor.class, autor.getId_autor());
+        if (autor2 == null){
+            System.out.println("insert autor");
+            em.persist(autor); //fa un insert
+        }else {
+            System.out.println("update autor");
+            em.merge(autor); //fa un update
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    /* Method to CREATE an Autor in the database */
+    public void addRevista(Revista revista) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Revista revista1 = em.find(Revista.class, revista.getId_revista());
+        if (revista1 == null){
+            System.out.println("insert revista");
+            em.persist(revista); //fa un insert
+        }else {
+            System.out.println("update revista");
+            em.merge(revista); //fa un update
+        }
         em.getTransaction().commit();
         em.close();
     }
@@ -58,16 +82,39 @@ public class AutorJPAManager {
         }
         em.getTransaction().commit();
         em.close();
+    }
 
+    /* Method to READ all Autors */
+    public void listRevista() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        List<Revista> result = em.createQuery("from Revista", Revista.class)
+                .getResultList();
+        for (Revista revista : result) {
+            System.out.println(revista.toString());
+        }
+        em.getTransaction().commit();
+        em.close();
     }
 
     /* Method to UPDATE activity for an autor */
     public void updateAutor(Integer AutorID, boolean actiu) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Autor autor = (Autor) em.find(Autor.class, AutorID);
+        Autor autor = em.find(Autor.class, AutorID);
         autor.setActiu(actiu);
         em.merge(autor);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    /* Method to UPDATE activity for an autor */
+    public void updateRevista(Integer revistaID, String titol) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Revista revista = em.find(Revista.class, revistaID);
+        revista.setTitol(titol);
+        em.merge(revista);
         em.getTransaction().commit();
         em.close();
     }
@@ -76,8 +123,18 @@ public class AutorJPAManager {
     public void deleteAutor(Integer AutorID) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Autor autor = (Autor) em.find(Autor.class, AutorID);
+        Autor autor = em.find(Autor.class, AutorID);
         em.remove(autor);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    /* Method to DELETE an employee from the records */
+    public void deleteRevista(Integer revistaID) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Revista revista = em.find(Revista.class, revistaID);
+        em.remove(revista);
         em.getTransaction().commit();
         em.close();
     }

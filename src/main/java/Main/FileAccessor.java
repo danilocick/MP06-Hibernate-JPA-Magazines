@@ -1,5 +1,9 @@
 package Main;
 
+import Entities.Article;
+import Entities.Autor;
+import Entities.Revista;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,8 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
-
-import Entities.*;
 
 /**
  * @author Joan Anton Pérez
